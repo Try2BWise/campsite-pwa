@@ -14,7 +14,11 @@ async function checkAvailability() {
   
   // Format strictly required by Recreation.gov: YYYY-MM-01T00:00:00.000Z
   const startDate = `${year}-${month}-01T00:00:00.000Z`;
-  const url = `https://www.recreation.gov/api/camps/availability/campground/${campgroundId}/month?start_date=${startDate}`;
+  // const url = `https://www.recreation.gov/api/camps/availability/campground/${campgroundId}/month?start_date=${startDate}`;
+  const apiUrl = `https://www.recreation.gov/api/camps/availability/campground/${campgroundId}/month?start_date=${startDate}`;
+  const url = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
+
+
 
   try {
     const response = await fetch(url, {
