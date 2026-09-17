@@ -8,18 +8,20 @@ async function checkAvailability() {
   
   resultsDiv.innerHTML = "Checking availability...";
 
-  // Calculate current month date string: YYYY-MM-01T00:00:00.000Z
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
+  
+  // Format strictly required by Recreation.gov: YYYY-MM-01T00:00:00.000Z
   const startDate = `${year}-${month}-01T00:00:00.000Z`;
-
   const url = `https://www.recreation.gov/api/camps/availability/campground/${campgroundId}/month?start_date=${startDate}`;
 
   try {
     const response = await fetch(url, {
+      method: "GET",
       headers: {
-        'Accept': 'application/json'
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*"
       }
     });
 
@@ -32,10 +34,9 @@ async function checkAvailability() {
     let openSpots = [];
 
     for (const [siteId, siteInfo] of Object.entries(campsites)) {
-      const siteName = siteInfo.site || "";
+      const siteName = (siteInfo.site || "").trim();
       const siteUpper = siteName.toUpperCase();
 
-      // Site filtering logic
       if (targetSites.length > 0) {
         const matches = targetSites.some(target => 
           siteUpper === target || 
