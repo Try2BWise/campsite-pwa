@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <title>Campsite Checker PWA</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    button { padding: 10px 15px; font-size: 16px; margin-top: 10px; cursor: pointer; }
+    .card { border: 1px solid #ccc; padding: 15px; margin-top: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Campsite Availability Checker</h2>
+  
+  <label for="campground">Select Location:</label>
+  <select id="campground">
+    <option value="232721">Toad Suck Park (232721)</option>
+    <option value="233098">Maumelle COE (233098)</option>
+  </select>
+
+  <br/><br/>
+  <label for="targetSites">Target Sites (comma separated, blank = all):</label><br/>
+  <input type="text" id="targetSites" placeholder="e.g. B3, B4, C1, C10" value="B3, B4, C1, C10">
+
+  <br/><br/>
+  <button id="checkBtn">Check Availability</button>
+
+  <div id="results"></div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
